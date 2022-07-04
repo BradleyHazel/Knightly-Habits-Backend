@@ -166,9 +166,12 @@ app.post("/register", function (req, res) {
   );
 });
 
-app.get("/logout", function (req, res) {
-  req.logout();
-  res.send("logged out");
+
+app.get('/logout', function(req, res, next) {
+  req.logout(function(err) {
+    if (err) { return next(err); }
+    res.redirect('/login');
+  });
 });
 
 app.get("/confirmation", function (req, res) {
@@ -179,8 +182,64 @@ app.get("/forgot", function (req, res) {
   res.send("forgot page");
 });
 
-app.get("/reset", function (req, res) {
-  res.send("reset page");
+
+app.post("/forgotuser", function (req, res, next) {
+
+  User.find({email:req.body.email}).then((user) => {
+    console.log(user[0].username)
+
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      port: 465,
+      secure: true,
+      auth: {
+          user: process.env.DEV_EMAIL,
+          pass: process.env.DEV_PASSWORD,
+      }
+  });
+
+    var mailOptions = {
+      from: process.env.DEV_EMAIL,
+      to: user[0].email.toString(),
+      subject: user[0].username.toString(),
+      text: `Username: ${user[0].username}`,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+    res.send("Username Sent");
+})
+.catch(next);
+});
+
+
+app.post("/reset", function (req, res) {
+  User.findByUsername(req.body.username).then(
+    function (sanitizedUser) {
+      if (sanitizedUser) {
+        sanitizedUser.changePassword(
+          req.body.oldpassword,
+          req.body.newpassword,
+          function () {
+            sanitizedUser.save();
+
+            res.send("Password Reset!")
+          
+          }
+        );
+      } else {
+        res.render("This user does not exist!")
+      }
+    },
+    function (err) {
+      console.error(err);
+    }
+  );
 });
 
 // source https://stackoverflow.com/questions/1497481/javascript-password-generator
