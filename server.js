@@ -15,26 +15,23 @@ const nodemailer = require("nodemailer");
 const session = require("express-session")
 var cookieParser = require("cookie-parser")
 
-app.set("trust proxy", 1);
+
+
 
 app.use(
   session({
     secret: process.env.DEV_USER_SECRET,
     resave: true,
-    saveUninitialized: false,
-    httpOnly:true,
-   
-    
-    cookie: {  secure:true, httpOnly:false,sameSite:'none'},
-    proxy: true,
+    saveUninitialized: true,
+    cookie: {httpOnly:false},
 
   })
 );
 
 
 app.use(cookieParser(process.env.DEV_USER_SECRET))
-app.use(cors({credentials: true, origin: "http://localhost:8001/"}));
 
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -117,10 +114,9 @@ app.get("/user", function (req, res) {
   res.send(req.user);
 });
 
-app.post(
-  "/login",
+app.post( "/login",
   passport.authenticate("local", {
-    successRedirect: "/confirmation",
+    successRedirect: "/",
     failureRedirect: "/register"
   }),
   function (req, res) {
@@ -170,11 +166,9 @@ app.post("/register", function (req, res) {
   );
 });
 
-app.get('/logout', function(req, res, next) {
-  req.logout(function(err) {
-    if (err) { return next(err); }
-    res.redirect('/login');
-  });
+app.get("/logout", function (req, res) {
+  req.logout();
+  res.send("logged out");
 });
 
 app.get("/confirmation", function (req, res) {
@@ -184,7 +178,6 @@ app.get("/confirmation", function (req, res) {
 app.get("/forgot", function (req, res) {
   res.send("forgot page");
 });
-
 
 app.get("/reset", function (req, res) {
   res.send("reset page");
@@ -233,10 +226,16 @@ app.post("/forgot", function (req, res) {
               console.log("Email sent: " + info.response);
             }
           });
-          res.send("Temporary Password Sent");
+          res.render("confirmation", {
+            layout: "confirmation",
+            message: "Temporary Password Sent",
+          });
         });
       } else {
-        res.render("This user does not exist!");
+        res.render("confirmation", {
+          layout: "confirmation",
+          message: "This user does not exist!",
+        });
       }
     },
     function (err) {
@@ -244,41 +243,6 @@ app.post("/forgot", function (req, res) {
     }
   );
 });
-
-app.post("/forgotuser", function (req, res, next) {
-
-  User.find({email:req.body.email}).then((user) => {
-    console.log(user[0].username)
-
-    let transporter = nodemailer.createTransport({
-      service: 'gmail',
-      port: 465,
-      secure: true,
-      auth: {
-          user: process.env.DEV_EMAIL,
-          pass: process.env.DEV_PASSWORD,
-      }
-  });
-
-    var mailOptions = {
-      from: process.env.DEV_EMAIL,
-      to: user[0].email.toString(),
-      subject: user[0].username.toString(),
-      text: `Username: ${user[0].username}`,
-    };
-
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("Email sent: " + info.response);
-      }
-    });
-    res.send("Username Sent");
-})
-.catch(next);
-});
-
 
 app.post("/reset", function (req, res) {
   User.findByUsername(req.body.username).then(
@@ -290,12 +254,17 @@ app.post("/reset", function (req, res) {
           function () {
             sanitizedUser.save();
 
-            res.send("Password Reset!")
-          
+            res.render("confirmation", {
+              layout: "confirmation",
+              message: "Password Reset!",
+            });
           }
         );
       } else {
-        res.render("This user does not exist!")
+        res.render("confirmation", {
+          layout: "confirmation",
+          message: "This user does not exist!",
+        });
       }
     },
     function (err) {
@@ -304,5 +273,5 @@ app.post("/reset", function (req, res) {
   );
 });
 
-// const dayController = require("./controllers/dayController");
-// app.use("/", checkAuthentication, dayController);
+ const knightController = require("./controllers/knightController");
+ app.use("/", checkAuthentication, knightController);
