@@ -21,6 +21,7 @@ router.get("/", (req, res, next) => {
    // console.log(getTodaysDate())
    Knight.find({user:req.user._id})
     .then((knights) => {
+        console.log(knights)
         res.send(knights);
     })
     .catch(next);
