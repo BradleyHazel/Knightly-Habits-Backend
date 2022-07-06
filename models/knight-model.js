@@ -1,10 +1,11 @@
 const mongoose = require("../connection");
 
 const knightSchema = new mongoose.Schema({
-  user: { type: String },
-  name: { type: String},
-  description: { type: String},
+  user: { type: String, required: true },
+  name: { type: String, required: true},
+  desc: { type: String},
   expPoints: { type: String},
+  
   completedToday: { type: Boolean},
 });
 

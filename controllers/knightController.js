@@ -20,8 +20,8 @@ function getTodaysDate() {
 router.get("/", (req, res, next) => {
    // console.log(getTodaysDate())
    Knight.find({user:req.user._id})
-    .then((knight) => {
-        res.send(knight);
+    .then((knights) => {
+        res.send(knights);
     })
     .catch(next);
 });
@@ -38,7 +38,7 @@ router.get("/:id", (req, res, next) => {
 
 
 router.post("/add", (req, res, next) => {
- // console.log(req.body)
+  console.log(req.body)
  // req.body.owner = req.user._id ? req.user._id : req.user.id;
  
             Knight.create(req.body)

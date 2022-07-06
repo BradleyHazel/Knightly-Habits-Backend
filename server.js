@@ -131,13 +131,11 @@ app.get("/checkAuthentication", (req, res) => {
   });
 });
 
-app.get(
-  "/google",
+app.get("/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
-app.get(
-  "/google/callback",
+app.get("/google/callback",
   passport.authenticate("google", { failureRedirect: "/error" }),
   function (req, res) {
     // Successful authentication, redirect success.
