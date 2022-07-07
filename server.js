@@ -14,6 +14,29 @@ const rateLimit = require("express-rate-limit");
 const nodemailer = require("nodemailer");
 const session = require("express-session")
 var cookieParser = require("cookie-parser")
+const Knight = require("./models/knight-model");
+
+
+
+var cron = require('node-cron');
+
+cron.schedule('51 07 * * *', () => {
+
+  Knight.updateMany({}, 
+    {completedToday:false}, function (err, docs) {
+    if (err){
+        console.log(err)
+    }
+    else{
+        console.log("Updated Docs : ", docs);
+    }
+});
+
+
+}, {
+  scheduled: true,
+  timezone: "America/New_York"
+});
 
 
 
