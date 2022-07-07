@@ -4,7 +4,7 @@ const knightSchema = new mongoose.Schema({
   user: { type: String, required: true },
   name: { type: String, required: true},
   desc: { type: String},
-  expPoints: { type: String},
+  expPoints: { type: Number},
   
   completedToday: { type: Boolean},
 });

@@ -57,6 +57,7 @@ router.delete("/:knightid", (req, res, next) => {
 });
 
 router.put("/:id", (req, res) => {
+    console.log(req.body)
   Knight.findOneAndUpdate(
     {
 
