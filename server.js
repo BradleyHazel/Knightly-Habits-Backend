@@ -12,7 +12,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const bodyParser = require("body-parser");
 const rateLimit = require("express-rate-limit");
 const nodemailer = require("nodemailer");
-const session = require("cookie-session")
+const session = require("express-session")
 var cookieParser = require("cookie-parser")
 const Knight = require("./models/knight-model");
 
@@ -42,17 +42,19 @@ app.set("trust proxy", 1);
 
 
 
-app.use(session({
-  secret: process.env.DEV_USER_SECRET,
-  resave: true,
-  saveUninitialized: false,
-  proxy : true, // add this when behind a reverse proxy, if you need secure cookies
-  cookie : {
-      secure : true,
-      maxAge: 5184000000, // 2 months
-      httpOnly:false,sameSite:'none'
-  }
-}));
+app.use(
+  session({
+    secret: process.env.DEV_USER_SECRET,
+    resave: true,
+    saveUninitialized: false,
+    httpOnly:true,
+   
+    
+    cookie: {  secure:true, httpOnly:false,sameSite:'none'},
+    proxy: true,
+
+  })
+);
 
 
 app.use(cookieParser(process.env.DEV_USER_SECRET))
