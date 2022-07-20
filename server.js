@@ -41,19 +41,18 @@ cron.schedule('51 07 * * *', () => {
 app.set("trust proxy", 1);
 
 
-app.use(
-  session({
-    secret: process.env.DEV_USER_SECRET,
-    resave: true,
-    saveUninitialized: false,
-    httpOnly:true,
-   
-    
-    cookie: {  secure:true, httpOnly:false,sameSite:'none'},
-    proxy: true,
 
-  })
-);
+app.use(session({
+  secret: process.env.DEV_USER_SECRET,
+  resave: true,
+  saveUninitialized: false,
+  proxy : true, // add this when behind a reverse proxy, if you need secure cookies
+  cookie : {
+      secure : true,
+      maxAge: 5184000000, // 2 months
+      httpOnly:false,sameSite:'none'
+  }
+}));
 
 
 app.use(cookieParser(process.env.DEV_USER_SECRET))
