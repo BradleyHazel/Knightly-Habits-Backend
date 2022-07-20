@@ -59,7 +59,7 @@ app.use(
 
 app.use(cookieParser(process.env.DEV_USER_SECRET))
 
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
+app.use(cors({credentials: true, origin: 'https://subtle-wisp-8dcb2f.netlify.app'}));
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
