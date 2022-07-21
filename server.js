@@ -16,15 +16,8 @@ const session = require("express-session")
 var cookieParser = require("cookie-parser")
 const Knight = require("./models/knight-model");
 
-app.use(
-  cors({
-    origin:'*',
-    methods: "GET,POST,PUT,DELETE, PATCH",
-    credentials: true,
-    
-  })
-);
 
+app.use(cors({credentials: true, origin: "https://silver-crostata-388d0a.netlify.app"}));
 app.use(
   session({
     secret: process.env.DEV_USER_SECRET,
