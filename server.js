@@ -16,28 +16,6 @@ const session = require("express-session")
 var cookieParser = require("cookie-parser")
 const Knight = require("./models/knight-model");
 
-
-
-var cron = require('node-cron');
-
-cron.schedule('51 07 * * *', () => {
-
-  Knight.updateMany({}, 
-    {completedToday:false}, function (err, docs) {
-    if (err){
-        console.log(err)
-    }
-    else{
-        console.log("Updated Docs : ", docs);
-    }
-});
-
-
-}, {
-  scheduled: true,
-  timezone: "America/New_York"
-});
-
 app.set("trust proxy", 1);
 
 
@@ -59,7 +37,7 @@ app.use(
 
 app.use(cookieParser(process.env.DEV_USER_SECRET))
 
-app.use(cors({credentials: true, origin: 'https://subtle-wisp-8dcb2f.netlify.app'}));
+app.use(cors({credentials: true, origin: 'https://leafy-donut-cda1c8.netlify.app'}));
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
