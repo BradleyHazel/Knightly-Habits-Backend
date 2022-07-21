@@ -16,9 +16,6 @@ const session = require("express-session")
 var cookieParser = require("cookie-parser")
 const Knight = require("./models/knight-model");
 
-app.set("trust proxy", 1);
-
-
 
 app.use(
   session({
@@ -33,6 +30,8 @@ app.use(
 
   })
 );
+
+app.set("trust proxy", 1);
 
 
 app.use(cookieParser(process.env.DEV_USER_SECRET))
