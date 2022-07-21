@@ -17,7 +17,7 @@ var cookieParser = require("cookie-parser")
 const Knight = require("./models/knight-model");
 
 
-app.use(cors({credentials: true, origin: "http://localhost:3000"}));
+app.use(cors({credentials: true, origin: "https://luxury-donut-620d8f.netlify.app"}));
 app.use(
   session({
     secret: process.env.DEV_USER_SECRET,
