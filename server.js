@@ -37,8 +37,7 @@ app.use(
   cors({
     origin:'https://silver-crostata-388d0a.netlify.app',
     methods: "GET,POST,PUT,DELETE, PATCH",
-    credentials: true,
-    maxAge: 3600,
+    credentials: true
   })
 );
 
@@ -176,7 +175,6 @@ app.post("/register", function (req, res) {
     }
   );
 });
-
 
 app.get('/logout', function(req, res, next) {
   req.logout(function(err) {
