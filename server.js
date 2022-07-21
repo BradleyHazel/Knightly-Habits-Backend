@@ -33,10 +33,18 @@ app.use(
 
 app.set("trust proxy", 1);
 
+app.use(
+  cors({
+    origin:'https://leafy-donut-cda1c8.netlify.app',
+    methods: "GET,POST,PUT,DELETE, PATCH",
+    credentials: true,
+    maxAge: 3600,
+  })
+);
+
 
 app.use(cookieParser(process.env.DEV_USER_SECRET))
 
-app.use(cors({credentials: true, origin: 'https://leafy-donut-cda1c8.netlify.app'}));
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
