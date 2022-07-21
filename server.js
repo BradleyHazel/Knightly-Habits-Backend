@@ -35,7 +35,7 @@ app.set("trust proxy", 1);
 
 app.use(
   cors({
-    origin:'https://leafy-donut-cda1c8.netlify.app',
+    origin:'https://silver-crostata-388d0a.netlify.app',
     methods: "GET,POST,PUT,DELETE, PATCH",
     credentials: true,
     maxAge: 3600,
