@@ -4,6 +4,7 @@ var passportLocalMongoose = require("passport-local-mongoose");
 const userSchema = new mongoose.Schema({
   username: { type: String, unique: true },
   email: { type: String, unique: true },
+  motion: {type: Boolean, default:true}
 });
 
 userSchema.plugin(passportLocalMongoose);
