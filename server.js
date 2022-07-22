@@ -150,7 +150,7 @@ app.get("/google/callback",
   }
 );
 
-router.put("/user/:id", (req, res) => {
+app.put("/user/:id", (req, res) => {
   console.log(req.body)
 User.findOneAndUpdate(
   {
