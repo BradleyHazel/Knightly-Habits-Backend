@@ -150,6 +150,24 @@ app.get("/google/callback",
   }
 );
 
+router.put("/user/:id", (req, res) => {
+  console.log(req.body)
+User.findOneAndUpdate(
+  {
+
+    _id: req.params.id
+   // owner: req.user._id ? req.user._id : req.user.id,
+  },
+  req.body,
+  { new: true }
+)
+  .then((user) => {
+ 
+    res.send(knight);
+  })
+  .catch(console.error);
+});
+
 app.post("/register", function (req, res) {
   var username = req.body.username;
   var email = req.body.email;
