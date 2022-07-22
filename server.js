@@ -163,7 +163,7 @@ User.findOneAndUpdate(
 )
   .then((user) => {
  
-    res.send(knight);
+    res.send(user);
   })
   .catch(console.error);
 });
