@@ -18,7 +18,6 @@ function getTodaysDate() {
 }
 
 router.get("/", (req, res, next) => {
-   // console.log(getTodaysDate())
    Knight.find({user:req.user._id})
     .then((knights) => {
         console.log(knights)
@@ -27,7 +26,15 @@ router.get("/", (req, res, next) => {
     .catch(next);
 });
 
+router.get("/stats/:id", (req, res, next) => {
+  Knight.find({user:req.user._id})
+    .then((knights) => {
+        console.log(knights)
+        res.send(knights);
+    })
+    .catch(next);
 
+});
 
 router.get("/:id", (req, res, next) => {
     Knight.find({_id: req.params.id,user:req.user._id})
