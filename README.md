@@ -5,8 +5,7 @@
 ## Front End Github: [GitHub](https://github.com/BradleyHazel/Knightly-Habits-Frontend)
 
 ## Project Description
-                Knightly Habits is an app designed to help you keep track of your
-                habits with the help of basic RPG mechanics.
+Knightly Habits is an app designed to help you keep track of your habits with the help of basic RPG mechanics.
 ## Technology Used
 - Languages: JavaScript
 - Notable Frameworks/Dependencies: [Node](https://reactjs.org/), [Express.js](https://expressjs.com/), [MongoDB](https://www.mongodb.com/), [Mongoose](https://mongoosejs.com/), [Passport](https://www.passportjs.org/).
