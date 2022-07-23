@@ -1,11 +1,7 @@
-// https://www.geeksforgeeks.org/login-form-using-node-js-and-mongodb/
-// https://www.loginradius.com/blog/engineering/google-authentication-with-nodejs-and-passportjs/
 require('dotenv').config()
 const express = require("express");
 const cors = require("cors");
-
 const app = express();
-
 const mongoose = require("mongoose");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
@@ -14,8 +10,6 @@ const rateLimit = require("express-rate-limit");
 const nodemailer = require("nodemailer");
 const session = require("express-session")
 var cookieParser = require("cookie-parser")
-const Knight = require("./models/knight-model");
-
 
 app.use(cors({credentials: true, origin: "https://knightly-habits.netlify.app"}));
 app.use(
@@ -24,33 +18,19 @@ app.use(
     resave: true,
     saveUninitialized: false,
     httpOnly:true,
-   
-    
     cookie: {  secure:true, httpOnly:false,sameSite:'none'},
     proxy: true,
-
   })
 );
 
 app.set("trust proxy", 1);
-
-
-
-
 app.use(cookieParser(process.env.DEV_USER_SECRET))
-
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.set("port", process.env.PORT || 8001);
-
 User = require("./models/user-model");
 app.use(bodyParser.urlencoded({ extended: true }));
-
-
-
-
 app.listen(app.get("port"), () => {
     console.log(`✅ PORT: ${app.get("port")} 🌟`);
   });
