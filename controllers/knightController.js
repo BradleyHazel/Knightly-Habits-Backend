@@ -26,16 +26,6 @@ router.get("/", (req, res, next) => {
     .catch(next);
 });
 
-router.get("/stats", (req, res, next) => {
-  Knight.find({user:req.user._id})
-    .then((knights) => {
-        console.log(knights)
-        res.send(knights);
-    })
-    .catch(next);
-
-});
-
 router.get("/:id", (req, res, next) => {
     Knight.find({_id: req.params.id,user:req.user._id})
     .then((knight) => {
